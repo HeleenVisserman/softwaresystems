@@ -1,11 +1,14 @@
 package ss.week2.test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import ss.week2.Password;
+import ss.week2.Safe;
 import ss.week2.hotel.Guest;
 import ss.week2.hotel.Room;
-
-import static org.junit.Assert.assertEquals;
 
 public class RoomTest {
     private Guest guest;
@@ -14,7 +17,7 @@ public class RoomTest {
     @Before
     public void setUp() {
         guest = new Guest("Jip");
-        room = new Room(101);
+        room = new Room(101, new Safe(null));
     }
 
     @Test
@@ -26,5 +29,14 @@ public class RoomTest {
     public void testSetGuest() {
         room.setGuest(guest);
         assertEquals(guest, room.getGuest());
+    }
+    
+    @Test
+    public void testGetSafe() {
+    	assertEquals(true, room.getSafe().getPassword().testWord(Password.INITIAL));
+    	Password word = new Password();
+    	word.setWord(Password.INITIAL, "password");
+    	room = new Room(101, new Safe(word));
+    	assertEquals(true, room.getSafe().getPassword().testWord("password"));
     }
 }

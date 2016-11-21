@@ -6,11 +6,22 @@ public class Safe {
 	private boolean activated;
 	private boolean open;
 	
+	public static void main(String[] args) {
+		Safe safe = new Safe(null);
+		safe.close();
+	}
+	
 	/**
 	 * Create a new <code>Safe</code> instance.
 	 */
 	public Safe(Password password) {
+		if (password == null)
+			this.password = new Password();
+		else
+			this.password = password;
 		
+		activated = false;
+		open = false;
 	}
 	
 	/**
@@ -18,7 +29,7 @@ public class Safe {
 	 * @return true if <code>Safe</code> is active, false otherwise
 	 */
 	public boolean isActive() {
-		return false;
+		return activated;
 	}
 	
 	/**
@@ -26,7 +37,7 @@ public class Safe {
 	 * @return true if <code>Safe</code> is open, false otherwise
 	 */
 	public boolean isOpen() {
-		return false;
+		return open;
 	}
 	
 	/**
@@ -34,7 +45,7 @@ public class Safe {
 	 * @return password of <code>Safe</code>
 	 */
 	public Password getPassword() {
-		return null;
+		return password;
 	}
 	
 	/**
@@ -48,6 +59,10 @@ public class Safe {
 	 *  ensures activated = true;
 	 */
 	public void activate(String inputPassword) {
+		assert !activated;
+		if (inputPassword != null && inputPassword != "" && password.testWord(inputPassword))
+			activated = true;
+			
 	}
 	
 	/**
@@ -59,6 +74,9 @@ public class Safe {
 	 *  ensures open = false;
 	 */
 	public void deactivate() {
+		assert activated;
+		assert !open;
+		activated = false;
 	}
 	
 	/**
@@ -72,6 +90,10 @@ public class Safe {
 	 *  ensures open = true;
 	 */
 	public void open(String inputPassword) {
+		assert !open;
+		assert activated;
+		if (inputPassword != null && inputPassword != "" && password.testWord(inputPassword))
+			open = true;
 	}
 	
 	/**
@@ -79,9 +101,13 @@ public class Safe {
 	 */
 	/*
 	 *@ requires open == true;
+	 *  requires activated == true;
 	 *  ensures open = false;
 	 */
 	public void close() {
+		assert open;
+		assert activated;
+		open = false;
 	}
 	
 }

@@ -11,21 +11,28 @@ import ss.week2.Safe;
 public class SafeTest {
 
 	Safe safe;
+	String password;
 
 	@Before
 	public void setUp() throws Exception {
-		safe = new Safe(new Password());
+		password = "password";
+		
+		Password passwordObject = new Password();
+		passwordObject.setWord(Password.INITIAL, password);
+		safe = new Safe(passwordObject);
 	}
 
 	@Test
 	public void testSetup() {
+		assertEquals(true, safe.getPassword().testWord(password));
+		safe = new Safe(null);
 		assertEquals(true, safe.getPassword().testWord(Password.INITIAL));
 	}
 
 	@Test
 	public void testActivateCorrectPassword() {
 		assertEquals(false, safe.isActive());
-		safe.activate(Password.INITIAL);
+		safe.activate(password);
 		assertEquals(true, safe.isActive());
 	}
 
@@ -34,11 +41,15 @@ public class SafeTest {
 		assertEquals(false, safe.isActive());
 		safe.activate("wrong");
 		assertEquals(false, safe.isActive());
+		safe.activate(null);
+		assertEquals(false, safe.isActive());
+		safe.activate("");
+		assertEquals(false, safe.isActive());
 	}
 
 	@Test
 	public void testDeactive() {
-		safe.activate(Password.INITIAL);
+		safe.activate(password);
 		assertEquals(true, safe.isActive());
 		safe.deactivate();
 		assertEquals(false, safe.isActive());
@@ -46,19 +57,31 @@ public class SafeTest {
 
 	@Test
 	public void testOpenCorrectPassword() {
-		safe.open(Password.INITIAL);
+		assertEquals(false, safe.isOpen());
+		safe.activate(password);
+		assertEquals(true, safe.isActive());
+		safe.open(password);
 		assertEquals(true, safe.isOpen());
 	}
 
 	@Test
 	public void testOpenWrongPassword() {
+		safe.activate(password);
+		assertEquals(true, safe.isActive());
+		assertEquals(false, safe.isOpen());
 		safe.open("wrong");
+		assertEquals(false, safe.isOpen());
+		safe.open("");
+		assertEquals(false, safe.isOpen());
+		safe.open(null);
 		assertEquals(false, safe.isOpen());
 	}
 
 	@Test
 	public void testClose() {
-		safe.open(Password.INITIAL);
+		safe.activate(password);
+		assertEquals(true, safe.isActive());
+		safe.open(password);
 		assertEquals(true, safe.isOpen());
 		safe.close();
 		assertEquals(false, safe.isOpen());
@@ -66,21 +89,23 @@ public class SafeTest {
 
 	@Test
 	public void testGetPassword() {
-		assertEquals(Password.INITIAL, safe.getPassword());
+		assertEquals(true, safe.getPassword().testWord(password));
 	}
 
 	@Test
 	public void testIsOpen() {
+		safe.activate(password);
+		assertEquals(true, safe.isActive());
 		assertEquals(false, safe.isOpen());
-		safe.open(Password.INITIAL);
+		safe.open(password);
 		assertEquals(true, safe.isOpen());
 	}
 
 	@Test
 	public void testIsActivated() {
-		assertEquals(true, safe.isActive());
-		safe = new Safe(null);
 		assertEquals(false, safe.isActive());
+		safe.activate(password);
+		assertEquals(true, safe.isActive());
 	}
 
 }
