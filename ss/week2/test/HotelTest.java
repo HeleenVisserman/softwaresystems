@@ -1,11 +1,21 @@
 package ss.week2.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
-import ss.week2.hotel.*;
 
-import static org.junit.Assert.*;
+import ss.week2.Password;
+import ss.week2.Safe;
+import ss.week2.hotel.Guest;
+import ss.week2.hotel.Hotel;
+import ss.week2.hotel.Room;
 
 public class HotelTest {
     /** Test variable for a <tt>Hotel</tt> object. */
@@ -140,6 +150,7 @@ public class HotelTest {
     public void testToString() {
         hotel.checkIn(correctPassword, GUEST_NAME_1);
 
+        System.out.println(hotel.toString());
         assertThat(hotel.toString(), CoreMatchers.containsString(GUEST_NAME_1));
     }
 }
