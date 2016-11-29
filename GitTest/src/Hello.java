@@ -5,4 +5,8 @@ public class Hello {
 		System.out.println("Hello");
 	}
 	
+	public void nope() {
+		
+	}
+	
 }
