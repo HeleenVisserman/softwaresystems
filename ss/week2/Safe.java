@@ -1,5 +1,8 @@
 package ss.week2;
 
+/**
+ * @author Kevin Witlox Chris Witteveen
+ */
 public class Safe {
 
 	private Password password;
