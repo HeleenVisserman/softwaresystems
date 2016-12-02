@@ -1,0 +1,11 @@
+Exercise 2.11
+The package ss.week2 and ss.week2.test are the most covered, the other two have zero percent coverage.
+Since the SafeTest is ran, only code from Safe and classes used by Safe is run.
+Therefore some files and packages have zero percent coverage, this is not a problem.
+Yes, we added extra checks to the methods testOpenWrongPassword and testActivateWrongPassword
+that checked whether the given password is null or empty.
+
+Exercise 2.12
+In the first execution the assert statement is ignored and therefore the code runs without any trouble.
+In the second execution the assert statement throws an AssertionError.
+
