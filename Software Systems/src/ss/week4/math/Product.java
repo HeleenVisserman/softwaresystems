@@ -22,7 +22,10 @@ public class Product implements Function {
 	
 	@Override
 	public String toString() {
-		return "Product { " + a.toString() + ", " + b.toString() + " }";
+		if (b instanceof Product)
+			return a.toString() + " * (" + b.toString() + ")";
+		else
+			return a.toString() + " * " + b.toString();
 	}
 
 }

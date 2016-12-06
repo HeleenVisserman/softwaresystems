@@ -49,5 +49,16 @@ public class Polynomial implements Function, Integrandable {
 
 		return new Polynomial(products);
 	}
+	
+	@Override
+	public String toString() {
+		String temp = "";
+		for (int i = 0; i < linearProducts.length - 1; i++) {
+			temp += linearProducts[i].toString() + " + "; // Je moet eigenlijk Stringbuilder gebruiken
+		}
+		
+		temp += linearProducts[linearProducts.length - 1].toString();
+		return temp;
+	}
 
 }

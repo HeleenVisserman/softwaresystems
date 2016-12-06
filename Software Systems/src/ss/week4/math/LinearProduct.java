@@ -16,7 +16,7 @@ public class LinearProduct extends Product implements Integrandable {
 		if (b instanceof Integrandable)
 			return new LinearProduct((Constant) a, ((Integrandable) b).integrand());
 		else
-			throw new UnsupportedOperationException("Dit klonk gwn leuk");
+			throw new UnsupportedOperationException("The function needs to be integrandable");
 	}
 
 }
