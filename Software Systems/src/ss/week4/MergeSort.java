@@ -12,12 +12,10 @@ public class MergeSort {
     			List<Elem> res = sort(list);
     			list.clear();
     			list.addAll(res);
-    			System.out.println("\n\n");
     }
     
     public static <Elem extends Comparable<Elem>> List<Elem> 
     sort(List<Elem> list) {
-    	System.out.println(list.toString());
     	if (list.size() < 2) {
     		return list;
     	}
@@ -44,8 +42,7 @@ public class MergeSort {
     	} else if (si < snd.size() && fi == fst.size()) {
     		res.addAll(snd.subList(si, snd.size()));
     	}
-    	
-    	System.out.println(res.toString());
+
     	return res;
     }
 }

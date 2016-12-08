@@ -234,25 +234,19 @@ public class Board {
      */
     /*@ pure */
     public boolean hasDiagonal(Mark m) {
-    	boolean hasWon = true;
-    	for (int rc = 0; rc < DIM; rc++) {
-    		if (getField(rc, rc) != m) {
-    			hasWon = false;
+    	boolean hasWonDif = true;
+    	boolean hasWonSame = true;
+    	
+    	for (int i = 0; i < DIM; i++) {
+    		if (getField(i, i) != m) {
+    			hasWonSame = false;
     		}
-    	}
-    	if (hasWon) {
-    		return true;
+    		if (getField(DIM - 1 - i, i) != m) {
+    			hasWonDif = false;
+    		}
     	}
     	
-    	hasWon = true;
-    	for (int row = 0; row < DIM; row++) {
-    		for (int col = 0; col < DIM; col++) {
-    			if (row + col == DIM-1 && getField(row, col) != m) {
-    				hasWon = false;
-    			}
-    		}
-    	}
-        return hasWon;
+    	return hasWonDif || hasWonSame;
     }
 
     /**
