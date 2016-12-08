@@ -20,7 +20,7 @@ public class Constant implements Function, Integrandable {
 	
 	@Override
 	public String toString() {
-		return "Constant: " + c;
+		return "(" + c + ")";
 	}
 
 	@Override

@@ -2,70 +2,97 @@ package ss.week4;
 
 public class LinkedList<Element> {
 
-    private /*@ spec_public @*/ int size;
-    private Node first;
+	private /* @ spec_public @ */ int size;
+	private Node first;
 
-    //@ ensures \result.size == 0;
-    public LinkedList () {
-        size = 0;
-        first = null;
-    }
+	// @ ensures \result.size == 0;
+	public LinkedList() {
+		size = 0;
+		first = null;
+	}
 
-    public void add(int index, Element element) {
-        Node newNode = new Node(element);
-        if (index == 0) {
-            newNode.next = first;
-            first = newNode;
-        } else {
-            Node p = getNode(index-1);
-            newNode.next = p.next;
-            p.next = newNode;
-        }
-        size = size + 1;
-    }
+	public void add(int index, Element element) {
+		Node newNode = new Node(element);
+		if (index == 0) {
+			newNode.next = first;
+			first = newNode;
+		} else {
+			Node p = getNode(index - 1);
+			newNode.next = p.next;
+			p.next = newNode;
+		}
+		size = size + 1;
+	}
 
-    //@ ensures this.size == \old(size) - 1;
-    public void remove(Element element) {
-        // TODO: implement, see exercise P-4.18
-    }
+	// @ ensures this.size == \old(size) - 1;
+	public void remove(Element element) {
+		Node prev = findBefore(element);
+		if (prev != null) {
+			Node next = prev.next.next; 
+			// prev.next does exist since that's 'element'. 
+			// If prev.next.next is null, 'element' is the last element in the list,
+			// therefore the next of the previous Node will be null.
+			prev.next = next;
+			size--;
+		} else {
+			// Element might not exist, or its the first element
+			if (first.getElement() == element) {
+				first = first.next; // If next is null, the list is now empty
+				size--;
+			}
+		}
+	}
 
-    public Node findBefore(Element element) {
-        // TODO: implement, see exercise P-4.18
-    }
+	public Node findBefore(Element element) {
+		Node p = first;
+		int pos = 0;
+		while (pos < size) {
+			if (p.next != null) {
+				pos++;
+				if (p.next.getElement() == element)
+					return p;
+				p = p.next;
+			} else {
+				return null;
+			}
+		}
 
-    //@ requires 0 <= index && index < this.size();
-    public Element get(int index) {
-        Node p = getNode(index);
-        return p.element;
-    }
+		return null;
+	}
 
-    //@ requires 0 <= i && i < this.size();
-    private /*@ pure @*/ Node getNode(int i) {
-        Node p = first;
-        int pos = 0;
-        while (pos != i) {
-            p = p.next;
-            pos = pos + 1;
-        }
-        return p;
-    }
+	// @ requires 0 <= index && index < this.size();
+	public Element get(int index) {
+		Node p = getNode(index);
+		return p.element;
+	}
 
-    //@ ensures \result >= 0;
-    public /*@ pure @*/ int size() {
-        return size;
-    }
+	// @ requires 0 <= i && i < this.size();
+	private /* @ pure @ */ Node getNode(int i) {
+		Node p = first;
+		int pos = 0;
+		while (pos != i) {
+			p = p.next;
+			pos = pos + 1;
+		}
+		return p;
+	}
 
-    public class Node {
-        private Element element;
-        public Node next;
+	// @ ensures \result >= 0;
+	public /* @ pure @ */ int size() {
+		return size;
+	}
 
-        public Node(Element element) {
-            this.element = element;
-            this.next = null;
-        }
+	public class Node {
+		private Element element;
+		public Node next;
 
-        public Element getElement() {
-            return element;
-        }
-    }
+		public Node(Element element) {
+			this.element = element;
+			this.next = null;
+		}
+
+		public Element getElement() {
+			return element;
+		}
+	}
 }

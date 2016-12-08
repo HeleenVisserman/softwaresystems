@@ -22,7 +22,7 @@ public class Sum implements Function{
 	
 	@Override
 	public String toString() {
-		return "Sum { " + a.toString() + ", " + b.toString() + " }";
+		return "(" + a.toString() + " + " + b.toString() + ")";
 	}
 	
 }
