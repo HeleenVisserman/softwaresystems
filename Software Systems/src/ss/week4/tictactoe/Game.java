@@ -119,6 +119,19 @@ public class Game {
      */
     private void play() {
         // TODO: implement, see P-4.20
+    	Player currPlayer = players[0];
+    	while (!board.gameOver()) {
+    		update();
+    		board.setField(currPlayer.determineMove(board), currPlayer.getMark());
+    		if (currPlayer == players[0])
+    			currPlayer = players[1];
+    		else if (currPlayer == players[1])
+    			currPlayer = players[0];
+    		else
+    			System.err.println("Something went terribly wrong");
+    	}
+    	
+    	printResult();
     }
 
     /**
